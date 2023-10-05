@@ -63,7 +63,7 @@ public class GeneticAlgorithm {
             System.out.println("[" + language.getName() + ", run " + (i + 1) + "]");
             System.out.println(best.toString());
             System.out.println("Random board:");
-            System.out.println(renderBoardToString(best.toCharProbGenerator().generateFourByFourBoard()));
+            System.out.println(renderBoardToString(best.toCharProbGenerator().generateFourByFourBoard(null)));
 
             writeDistribution(language, outputDir, best);
         }
@@ -229,7 +229,7 @@ public class GeneticAlgorithm {
         private static SummaryStatistics generateStats(File trieDir, Genome genome, Language language, int iterations) throws IOException {
             SummaryStatistics stats = new SummaryStatistics();
             for (int i = 0; i < iterations; i++) {
-                Board board = genome.toCharProbGenerator().generateFourByFourBoard();
+                Board board = genome.toCharProbGenerator().generateFourByFourBoard(null);
                 InputStream stream = trieReader(trieDir, language);
                 Trie dict = new StringTrie.Deserializer().deserialize(stream, board, language);
                 int numWords = dict.solver(board, new WordFilter.MinLength(3)).size();
